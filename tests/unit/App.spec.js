@@ -51,7 +51,7 @@ test('App.vue muestra la nota actual cuándo es seleccionada | Asegúrate de que
     }
   });
 
-  const buttons = wrapper.findAll('button').filter(button => button.text().toLowerCase() !== "crear nota");;
+  const buttons = wrapper.findAll('button').filter(button => button.text().toLowerCase() !== "crear nota");
 
   for (let i = 0; i < buttons.length; i++) {
     const button = buttons[i];
@@ -151,16 +151,16 @@ test('App crea una nueva nota al presionar el boton "crear nota" | Asegúrate de
     }
   });
 
-  const allButtons = wrapper.findAll('button')
+  const allButtons = wrapper.findAll('button');
 
-  const newNoteButton = allButtons.find(button => button.text().toLowerCase() === 'crear nota')
+  const newNoteButton = allButtons.find(button => button.text().toLowerCase() === 'crear nota');
 
-  await newNoteButton.trigger('click')
+  await newNoteButton.trigger('click');
 
-  expect(wrapper.vm.notas.length).toBe(3)
+  expect(wrapper.vm.notas.length).toBe(3);
 
   const newNota = wrapper.vm.notas[2];
 
-  expect(newNota.titulo).toBe('')
-  expect(newNota.contenido).toBe('')
+  expect(newNota.titulo).toBe('');
+  expect(newNota.contenido).toBe('');
 });
