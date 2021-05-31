@@ -51,7 +51,7 @@ test('App.vue muestra la nota actual cuándo es seleccionada | Asegúrate de que
     }
   });
 
-  const buttons = wrapper.findAll('button');
+  const buttons = wrapper.findAll('button').filter(button => button.text().toLowerCase() !== "crear nota");;
 
   for (let i = 0; i < buttons.length; i++) {
     const button = buttons[i];
@@ -90,7 +90,7 @@ test('App.vue asigna la clase "active" a la nota seleccionada | Asegúrate de qu
     }
   });
 
-  const buttons = wrapper.findAll('button');
+  const buttons = wrapper.findAll('button').filter(button => button.text().toLowerCase() !== "crear nota");
 
   for (let i = 0; i < buttons.length; i++) {
     const button = buttons[i];
@@ -137,4 +137,30 @@ test('App utiliza two-way binding en los valores de notaActual | Asegúrate de q
 
   expect(wrapper.vm.notaActual.contenido.toLowerCase()).toBe('nuevo cambio');
   expect(wrapper.vm.notaActual.titulo.toLowerCase()).toBe('nuevo titulo cambio');
+});
+
+test('App crea una nueva nota al presionar el boton "crear nota" | Asegúrate de que al presionar el boton que diga "Crear nota" se inserte una nueva nota en el array de notas con el titulo y el contenido vacíos', async () => {
+  const notas = [{ titulo: "testing 12", contenido: "Contenido 1" }, { titulo: "testing 2", contenido: "Contenido 4" }];
+
+  const wrapper = shallowMount(App, {
+    data() {
+      return {
+        notas,
+        notaActual: notas[0]
+      };
+    }
+  });
+
+  const allButtons = wrapper.findAll('button')
+
+  const newNoteButton = allButtons.find(button => button.text().toLowerCase() === 'crear nota')
+
+  await newNoteButton.trigger('click')
+
+  expect(wrapper.vm.notas.length).toBe(3)
+
+  const newNota = wrapper.vm.notas[2];
+
+  expect(newNota.titulo).toBe('')
+  expect(newNota.contenido).toBe('')
 });

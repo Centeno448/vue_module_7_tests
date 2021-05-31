@@ -1,5 +1,6 @@
 <template>
   <h1>Bienvenido al curso de Vue</h1>
+  <button @click= "crearNota" class="create-new-button"> Crear nota </button>
   <div class="notas">
     <nav>
       <p v-if="!notas.length">No hay notas guardadas</p>
@@ -32,6 +33,16 @@ export default {
       notaActual: null,
     };
   },
+  methods: {
+    crearNota() {
+    const nuevaNota = {titulo: "", contenido: ""};
+
+    this.notas.push(nuevaNota);
+
+    this.notaActual = nuevaNota;
+    }
+
+  }
 };
 </script>
 
